@@ -26,16 +26,26 @@ export const POST = async ({ request }) => {
         }
 
         // 3. Validación reCAPTCHA v3 (Servidor)
-        // Nota: Solo se ejecutará realmente si se ha configurado el RECAPTCHA_SECRET_KEY en Vercel.
         const recaptchaSecret = import.meta.env.RECAPTCHA_SECRET_KEY;
         if (recaptchaSecret && recaptchaToken) {
-            const recaptchaVerify = await fetch(`https://www.google.com/recaptcha/api/siteverify?secret=${recaptchaSecret}&response=${recaptchaToken}`, {
-                method: 'POST'
+            const verifyParams = new URLSearchParams();
+            verifyParams.append('secret', recaptchaSecret);
+            verifyParams.append('response', recaptchaToken);
+
+            const recaptchaVerify = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: verifyParams
             });
             const recaptchaRes = await recaptchaVerify.json();
             
-            if (!recaptchaRes.success || recaptchaRes.score < 0.5) {
-                return new Response(JSON.stringify({ error: 'Fallo de validación de seguridad (reCAPTCHA)' }), { status: 400 });
+            if (!recaptchaRes.success) {
+                console.error("reCAPTCHA Error:", recaptchaRes);
+                return new Response(JSON.stringify({ error: `reCAPTCHA falló: ${recaptchaRes['error-codes']?.join(', ') || 'Puntuación baja o token inválido'}` }), { status: 400 });
+            }
+            if (recaptchaRes.score < 0.5) {
+                console.error("reCAPTCHA Score Too Low:", recaptchaRes.score);
+                return new Response(JSON.stringify({ error: 'Tu conexión parece sospechosa (Score muy bajo)' }), { status: 400 });
             }
         }
 

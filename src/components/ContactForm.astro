@@ -145,11 +145,15 @@
                 // Simulate reCAPTCHA v3 Execution
                 if (typeof grecaptcha !== "undefined") {
                     try {
-                        const token = await new Promise((resolve) => {
+                        const token = await new Promise((resolve, reject) => {
                             grecaptcha.ready(function() {
-                                grecaptcha.execute('6LeE_RMtAAAAACe9qqdTi2iYcenZQEnH0-v5DZfk', {action: 'submit'}).then(function(t: string) {
-                                    resolve(t);
-                                });
+                                grecaptcha.execute('6LeE_RMtAAAAACe9qqdTi2iYcenZQEnH0-v5DZfk', {action: 'submit'})
+                                    .then(function(t: string) {
+                                        resolve(t);
+                                    })
+                                    .catch(function(err: any) {
+                                        reject(err);
+                                    });
                             });
                         });
                         formData.append('recaptcha_token', token as string);
@@ -181,8 +185,8 @@
                     throw new Error(result.error || "Error desconocido");
                 }
 
-            } catch (error) {
-                alert("Hubo un error al enviar tu solicitud. Por favor intenta de nuevo o contáctanos por WhatsApp.");
+            } catch (error: any) {
+                alert(error.message || "Hubo un error al enviar tu solicitud. Por favor intenta de nuevo o contáctanos por WhatsApp.");
                 submitBtn.textContent = originalBtnText;
                 submitBtn.disabled = false;
                 submitBtn.style.opacity = "1";
