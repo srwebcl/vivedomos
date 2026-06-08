@@ -1,0 +1,143 @@
+<div class="whatsapp-container">
+    <div class="whatsapp-tooltip">
+        ¡Hola! 👋 ¿Cotizamos tu domo?
+    </div>
+    <a
+        href="https://wa.me/56912345678?text=Hola%2C%20quiero%20cotizar%20un%20domo"
+        class="whatsapp-btn"
+        aria-label="Contactar por WhatsApp"
+        target="_blank"
+        rel="noopener noreferrer"
+    >
+        <div class="pulse-ring"></div>
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="white"
+            class="wa-icon"
+        >
+            <path
+                d="M12.032 2.001c-5.516 0-10 4.484-10 10 0 1.779.466 3.521 1.342 5.025l-1.354 4.95 5.076-1.322c1.468.843 3.141 1.289 4.844 1.289 5.516 0 10-4.484 10-10s-4.484-10-10-10zm0 18c-1.582 0-3.128-.427-4.477-1.234l-.321-.191-3.012.784.804-2.932-.209-.334c-.887-1.371-1.355-2.952-1.355-4.585 0-4.594 3.736-8.33 8.33-8.33 4.594 0 8.33 3.736 8.33 8.33s-3.736 8.33-8.33 8.33zm4.561-5.999c-.249-.124-1.473-.727-1.701-.81-.228-.083-.395-.124-.561.124-.166.249-.642.81-.787.976-.145.166-.291.187-.54.062-.249-.124-1.052-.388-2.003-1.237-.741-.66-1.241-1.476-1.387-1.725-.145-.249-.015-.384.109-.509.111-.111.249-.291.374-.437.124-.145.166-.249.249-.415.083-.166.041-.311-.021-.436-.062-.124-.561-1.352-.769-1.851-.202-.483-.407-.417-.561-.425-.145-.008-.311-.01-.478-.01-.166 0-.436.062-.664.311-.228.249-.871.851-.871 2.074 0 1.223.889 2.405 1.013 2.571.124.166 1.753 2.677 4.245 3.756.593.256 1.056.409 1.417.523.595.19 1.137.163 1.565.099.477-.072 1.473-.602 1.681-1.183.208-.581.208-1.079.145-1.183-.062-.104-.228-.166-.477-.29z"
+            ></path>
+        </svg>
+    </a>
+</div>
+
+<style>
+    .whatsapp-container {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .whatsapp-tooltip {
+        background: var(--white);
+        color: var(--primary-dark);
+        padding: 0.75rem 1.25rem;
+        border-radius: 1rem 1rem 0 1rem;
+        font-size: 0.95rem;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        border: 1px solid rgba(0,0,0,0.05);
+        opacity: 0;
+        transform: translateX(20px) scale(0.9);
+        transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        pointer-events: none;
+        white-space: nowrap;
+        transform-origin: bottom right;
+    }
+
+    /* Show tooltip by default with an animation after load */
+    @keyframes slideInTooltip {
+        0% { opacity: 0; transform: translateX(20px) scale(0.9); }
+        10% { opacity: 1; transform: translateX(0) scale(1); }
+        90% { opacity: 1; transform: translateX(0) scale(1); }
+        100% { opacity: 0; transform: translateX(10px) scale(0.95); }
+    }
+
+    .whatsapp-tooltip {
+        animation: slideInTooltip 8s ease-in-out 3s forwards;
+    }
+
+    .whatsapp-container:hover .whatsapp-tooltip {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+        animation: none; /* override the slideIn animation if hovered */
+    }
+
+    .whatsapp-btn {
+        background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+        width: 65px;
+        height: 65px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+        transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s ease;
+        position: relative;
+    }
+
+    .wa-icon {
+        position: relative;
+        z-index: 2;
+        transition: transform 0.3s ease;
+    }
+
+    .whatsapp-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(37, 211, 102, 0.5);
+    }
+
+    .whatsapp-btn:hover .wa-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .pulse-ring {
+        content: '';
+        width: 100%;
+        height: 100%;
+        background: #25D366;
+        border-radius: 50%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: scale(1);
+            opacity: 0.6;
+        }
+        70% {
+            transform: scale(1.4);
+            opacity: 0;
+        }
+        100% {
+            transform: scale(1.4);
+            opacity: 0;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .whatsapp-container {
+            bottom: 1.5rem;
+            right: 1.5rem;
+        }
+        .whatsapp-tooltip {
+            display: none; /* Hide tooltip on mobile to avoid covering screen */
+        }
+        .whatsapp-btn {
+            width: 60px;
+            height: 60px;
+        }
+    }
+</style>

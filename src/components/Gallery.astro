@@ -1,0 +1,170 @@
+---
+// Gallery.astro
+const images = [
+    "/hero-domo-1.jpeg",
+    "/hero-domo-2.jpeg",
+    "/hero-domo-3.jpeg",
+    "/hero-domo-4.jpeg",
+    "/interior-domo-10-1.jpeg",
+    "/interior-domo-8.jpeg",
+    "/interior-domo-10.jpeg",
+    "/interior-domo.jpeg"
+];
+---
+
+<section class="gallery-section">
+    <div class="container section-header animate-on-scroll" style="text-align: center; margin-bottom: 4rem;">
+        <span class="pre-title" style="color: var(--secondary); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.9rem; display: block; margin-bottom: 0.5rem;">Galería de Obras</span>
+        <h2 style="font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem; color: var(--primary-dark);">Nuestros Proyectos</h2>
+        <div style="width: 60px; height: 3px; background-color: var(--secondary); margin: 0 auto 1.5rem auto;"></div>
+        <p style="color: var(--gray); font-size: 1.1rem; max-width: 600px; margin: 0 auto;">Explora la calidad constructiva y los acabados de primera línea en nuestras instalaciones reales a lo largo de Chile.</p>
+    </div>
+    
+    <div class="carousel-container animate-on-scroll">
+        <div class="carousel-track">
+            {images.map((src, index) => (
+                <div class="carousel-slide">
+                    <img src={src} alt={`Proyecto Vive Domos ${index + 1}`} loading="lazy" />
+                </div>
+            ))}
+        </div>
+        <button class="carousel-btn prev" aria-label="Anterior">❮</button>
+        <button class="carousel-btn next" aria-label="Siguiente">❯</button>
+    </div>
+</section>
+
+<style>
+    .gallery-section {
+        padding: 4rem 0 6rem 0;
+        background-color: var(--white);
+        overflow: hidden;
+    }
+
+    .carousel-container {
+        position: relative;
+        max-width: 1400px;
+        margin: 0 auto;
+        /* Remove horizontal padding on mobile for edge-to-edge feel */
+        padding: 0; 
+    }
+
+    @media (min-width: 768px) {
+        .carousel-container {
+            padding: 0 1rem;
+        }
+    }
+
+    .carousel-track {
+        display: flex;
+        gap: 1rem; /* Smaller gap on mobile */
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE/Edge */
+        padding: 0 1.5rem 2rem 1.5rem; /* Padding inside the track to allow first/last items to have space */
+    }
+
+    @media (min-width: 768px) {
+        .carousel-track {
+            gap: 2rem;
+            padding: 0 0 2rem 0;
+        }
+    }
+
+    .carousel-track::-webkit-scrollbar {
+        display: none; /* Chrome/Safari */
+    }
+
+    .carousel-slide {
+        /* Mobile dimensions: more square-like, not taking full height */
+        width: 85vw;
+        height: 45vh; 
+        min-height: 300px;
+        max-height: 400px;
+        scroll-snap-align: center;
+        border-radius: 1.5rem;
+        overflow: hidden;
+        flex-shrink: 0;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        transition: transform 0.3s ease;
+    }
+
+    @media (min-width: 768px) {
+        .carousel-slide {
+            width: 60vw;
+            height: 70vh;
+            min-height: auto;
+            max-height: none;
+        }
+    }
+
+    .carousel-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+    }
+
+    .carousel-slide:hover img {
+        transform: scale(1.03);
+    }
+
+    .carousel-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.8);
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        color: var(--primary-dark);
+        cursor: pointer;
+        backdrop-filter: blur(4px);
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .carousel-btn:hover {
+        background: var(--white);
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .carousel-btn.prev {
+        left: 2rem;
+    }
+
+    .carousel-btn.next {
+        right: 2rem;
+    }
+    
+    @media (max-width: 768px) {
+        .carousel-btn {
+            display: none; /* Hide buttons on mobile, rely on swipe */
+        }
+    }
+</style>
+
+<script>
+    const track = document.querySelector('.carousel-track');
+    const prevBtn = document.querySelector('.carousel-btn.prev');
+    const nextBtn = document.querySelector('.carousel-btn.next');
+
+    if (track && prevBtn && nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            const slideWidth = track.querySelector('.carousel-slide').clientWidth;
+            track.scrollBy({ left: slideWidth + 32, behavior: 'smooth' }); // 32 is gap
+        });
+
+        prevBtn.addEventListener('click', () => {
+            const slideWidth = track.querySelector('.carousel-slide').clientWidth;
+            track.scrollBy({ left: -(slideWidth + 32), behavior: 'smooth' });
+        });
+    }
+</script>

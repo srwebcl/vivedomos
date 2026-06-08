@@ -1,0 +1,116 @@
+<form
+    id="contact-form"
+    class="premium-form animate-on-scroll"
+>
+    <div class="form-group">
+        <label for="name">Nombre completo</label>
+        <input type="text" id="name" name="name" required placeholder="Ej: Juan Pérez" />
+    </div>
+    <div class="form-group">
+        <label for="email">Correo electrónico</label>
+        <input type="email" id="email" name="email" required placeholder="ejemplo@correo.com" />
+    </div>
+    <div class="form-group">
+        <label for="phone">Teléfono</label>
+        <input type="tel" id="phone" name="phone" placeholder="+56 9 1234 5678" />
+    </div>
+    <div class="form-group">
+        <label for="message">Mensaje</label>
+        <textarea id="message" name="message" rows="4" required placeholder="Me gustaría cotizar el domo de 8m..."></textarea>
+    </div>
+    <div class="trust-badge">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+        <span>Tus datos están 100% seguros y nunca serán compartidos.</span>
+    </div>
+    
+    <button type="submit" class="btn" style="width: 100%; font-size: 1.1rem; padding: 1rem;">Quiero mi cotización gratuita</button>
+    
+    <p class="form-footer">
+        Respuesta rápida garantizada en menos de 24 horas ⏱️
+    </p>
+</form>
+
+<style>
+    .premium-form {
+        background: var(--white);
+        padding: 3rem;
+        border-radius: 1.5rem;
+        box-shadow: var(--shadow-xl);
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: var(--primary-dark);
+        font-size: 0.95rem;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 1rem 1.25rem;
+        border: 1px solid var(--gray-light);
+        border-radius: 0.75rem;
+        font-family: var(--font-body);
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background-color: #fafafa;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        background-color: var(--white);
+        box-shadow: 0 0 0 3px rgba(30, 69, 62, 0.1);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+        color: #9ca3af;
+    }
+
+    .form-footer {
+        font-size: 0.875rem;
+        margin-top: 1.5rem;
+        color: var(--gray);
+        text-align: center;
+    }
+
+    .trust-badge {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+        color: var(--primary-light);
+        background: rgba(30, 69, 62, 0.05);
+        padding: 0.75rem;
+        border-radius: 0.5rem;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+</style>
+
+<script>
+    const form = document.getElementById("contact-form");
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        // Aquí puedes integrar con un servicio de email como Web3Forms, Formspree, etc.
+        // Por ahora redirige a WhatsApp con los datos
+        const message = `Hola, me interesa cotizar un domo.%0ANombre: ${data.name}%0ACorreo: ${data.email}%0ATeléfono: ${data.phone}%0AMensaje: ${data.message}`;
+        window.open(`https://wa.me/56912345678?text=${message}`, "_blank");
+
+        form.reset();
+        alert("¡Gracias! Te contactaremos por WhatsApp.");
+    });
+</script>

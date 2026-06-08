@@ -1,0 +1,55 @@
+---
+// Marquee.astro
+---
+<div class="marquee-container">
+    <div class="marquee-content">
+        <span class="marquee-item">⚡ CONSTRUIMOS EN TODO CHILE</span>
+        <span class="marquee-item">🏆 CALIDAD PREMIUM</span>
+        <span class="marquee-item">🔑 PROYECTOS LLAVE EN MANO</span>
+        <span class="marquee-item">🛡️ GARANTÍA ESTRUCTURAL</span>
+        <span class="marquee-item">🌿 ALTA EFICIENCIA ENERGÉTICA</span>
+        <!-- Duplicate for seamless loop -->
+        <span class="marquee-item" aria-hidden="true">⚡ CONSTRUIMOS EN TODO CHILE</span>
+        <span class="marquee-item" aria-hidden="true">🏆 CALIDAD PREMIUM</span>
+        <span class="marquee-item" aria-hidden="true">🔑 PROYECTOS LLAVE EN MANO</span>
+        <span class="marquee-item" aria-hidden="true">🛡️ GARANTÍA ESTRUCTURAL</span>
+        <span class="marquee-item" aria-hidden="true">🌿 ALTA EFICIENCIA ENERGÉTICA</span>
+    </div>
+</div>
+
+<style>
+    .marquee-container {
+        width: 100%;
+        overflow: hidden;
+        background: linear-gradient(90deg, var(--secondary-hover), var(--secondary), var(--secondary-hover));
+        background-size: 200% auto;
+        color: var(--white);
+        padding: 0.75rem 0;
+        position: relative;
+        z-index: 10;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        display: flex;
+        white-space: nowrap;
+    }
+
+    .marquee-content {
+        display: flex;
+        animation: marquee 25s linear infinite;
+    }
+
+    .marquee-item {
+        padding: 0 2rem;
+        font-weight: 700;
+        font-size: 0.9rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    @keyframes marquee {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); }
+    }
+</style>

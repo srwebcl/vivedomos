@@ -1,0 +1,209 @@
+---
+export interface Props {
+    title: string;
+    description?: string;
+}
+
+const {
+    title,
+    description = "VIVE DOMOS - Domos geodésicos llave en mano en Chile",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta
+            name="keywords"
+            content="domos geodésicos, domos chile, glamping, vivienda domo, vive domos"
+        />
+        <meta name="author" content="VIVE DOMOS" />
+        <link rel="icon" type="image/webp" href="/favicon.webp" />
+        <!-- Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Josefin+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+        
+        <style is:global>
+            :root {
+                --primary: #1e453e; /* Deep forest green */
+                --primary-dark: #122b27;
+                --primary-light: #2b6158;
+                --secondary: #d98852; /* Terracotta / Gold accent */
+                --secondary-hover: #c47644;
+                --light: #f7f6f2; /* Warm off-white */
+                --white: #ffffff;
+                --dark: #1a1c1a; /* Almost black */
+                --gray: #6b7280;
+                --gray-light: #e5e7eb;
+                
+                --font-heading: 'Josefin Sans', sans-serif;
+                --font-body: 'Inter', sans-serif;
+                
+                --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+                --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+                --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+                --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            }
+
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            html {
+                scroll-behavior: smooth;
+            }
+
+            body {
+                font-family: var(--font-body);
+                background-color: var(--light);
+                color: var(--dark);
+                line-height: 1.6;
+                -webkit-font-smoothing: antialiased;
+            }
+
+            h1, h2, h3, h4, h5, h6 {
+                font-family: var(--font-heading);
+                font-weight: 600;
+                line-height: 1.2;
+                color: var(--primary-dark);
+            }
+
+            h1 { font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: -0.02em; }
+            h2 { font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -0.01em; margin-bottom: 2rem; }
+            h3 { font-size: 1.5rem; }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 1.5rem;
+            }
+
+            .btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 50%, var(--primary-light) 100%);
+                background-size: 200% auto;
+                color: var(--white);
+                padding: 0.875rem 2.5rem;
+                border-radius: 9999px; /* Pill shape */
+                text-decoration: none;
+                font-weight: 600;
+                font-family: var(--font-body);
+                letter-spacing: 0.03em;
+                transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                border: none;
+                cursor: pointer;
+                box-shadow: 0 4px 15px rgba(30, 69, 62, 0.3);
+            }
+
+            .btn:hover {
+                background-position: right center;
+                transform: translateY(-3px) scale(1.02);
+                box-shadow: 0 8px 25px rgba(30, 69, 62, 0.4);
+            }
+
+            .btn-secondary {
+                background: linear-gradient(135deg, #c47644 0%, var(--secondary) 50%, #e6a06e 100%);
+                background-size: 200% auto;
+                color: var(--white);
+                box-shadow: 0 4px 15px rgba(217, 136, 82, 0.3);
+            }
+
+            .btn-secondary:hover {
+                background-position: right center;
+                box-shadow: 0 8px 25px rgba(217, 136, 82, 0.4);
+            }
+
+            .btn-outline {
+                background: transparent;
+                border: 2px solid var(--white);
+                color: var(--white);
+                box-shadow: none;
+            }
+
+            .btn-outline:hover {
+                background: rgba(255, 255, 255, 0.1);
+                border-color: var(--white);
+                color: var(--white);
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            }
+
+            .grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+                gap: 2.5rem;
+                margin: 2rem 0;
+            }
+
+            /* Card styles */
+            .card {
+                background: var(--white);
+                border-radius: 1.5rem;
+                overflow: hidden;
+                box-shadow: var(--shadow-md);
+                transition: all 0.4s ease;
+                border: 1px solid rgba(0,0,0,0.05);
+            }
+
+            .card:hover {
+                transform: translateY(-8px);
+                box-shadow: var(--shadow-xl);
+            }
+
+            .card-content {
+                padding: 2rem;
+            }
+
+            .price {
+                font-size: 2.25rem;
+                font-weight: 700;
+                font-family: var(--font-heading);
+                color: var(--primary);
+                margin: 1.5rem 0;
+            }
+
+            /* Animations */
+            .animate-on-scroll {
+                opacity: 0;
+                transform: translateY(30px);
+                transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            }
+            
+            .animate-on-scroll.visible {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        </style>
+    </head>
+    <body>
+        <main>
+            <slot />
+        </main>
+        
+        <script>
+            // Intersection Observer for scroll animations
+            document.addEventListener("DOMContentLoaded", () => {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add("visible");
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+                document.querySelectorAll('.animate-on-scroll').forEach((el) => {
+                    observer.observe(el);
+                });
+            });
+        </script>
+    </body>
+</html>

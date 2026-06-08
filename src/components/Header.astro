@@ -1,0 +1,263 @@
+<header class="header" id="main-header">
+    <div class="container header-content">
+        <a href="/" class="logo">
+            <img src="/logo-blanco.webp" alt="VIVE DOMOS" />
+        </a>
+        
+        <button class="menu-toggle" id="mobile-menu-btn" aria-label="Abrir menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <nav class="nav-links" id="nav-links">
+            <a href="/#domos" class="nav-item">Domos</a>
+            <a href="/#beneficios" class="nav-item">Beneficios</a>
+            <a href="/#contacto" class="nav-item">Contacto</a>
+            <a href="https://wa.me/56912345678?text=Hola%2C%20quiero%20cotizar%20un%20domo" class="btn btn-quote nav-item">Cotizar en WhatsApp</a>
+        </nav>
+    </div>
+</header>
+
+<style>
+    .header {
+        position: fixed; /* Integrated with Hero */
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000;
+        background: transparent;
+        box-shadow: none;
+        border-bottom: 1px solid transparent;
+        transition: background 0.4s ease, backdrop-filter 0.4s ease, box-shadow 0.4s ease, padding 0.4s ease;
+    }
+
+    /* Scrolled state on Desktop */
+    .header.scrolled {
+        background: rgba(18, 43, 39, 0.95);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 1.5rem;
+        transition: padding 0.4s ease;
+    }
+
+    .header.scrolled .header-content {
+        padding: 0.8rem 1.5rem;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        transition: transform 0.3s ease;
+        z-index: 1001; /* Keep above mobile menu */
+    }
+
+    .logo:hover {
+        transform: scale(1.03);
+    }
+
+    .logo img {
+        max-height: 60px;
+        filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+        transition: max-height 0.4s ease;
+    }
+
+    .header.scrolled .logo img {
+        max-height: 50px;
+    }
+
+    .menu-toggle {
+        display: none;
+    }
+
+    .nav-links {
+        display: flex;
+        align-items: center;
+    }
+
+    .nav-links a:not(.btn) {
+        margin-left: 2.5rem;
+        text-decoration: none;
+        color: var(--white);
+        font-weight: 500;
+        font-size: 0.95rem;
+        position: relative;
+        transition: color 0.3s ease;
+        text-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    }
+
+    .header.scrolled .nav-links a:not(.btn) {
+        text-shadow: none;
+    }
+
+    .nav-links a:not(.btn):hover {
+        color: var(--secondary);
+    }
+
+    .nav-links a:not(.btn)::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -6px;
+        left: 0;
+        background-color: var(--secondary);
+        transition: width 0.3s ease;
+        border-radius: 2px;
+    }
+
+    .nav-links a:not(.btn):hover::after {
+        width: 100%;
+    }
+
+    .btn-quote {
+        margin-left: 2.5rem;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+        .header {
+            position: sticky;
+            background: rgba(18, 43, 39, 0.98);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header-content {
+            padding: 1rem 1.5rem;
+        }
+        
+        .logo img {
+            max-height: 45px;
+        }
+
+        .menu-toggle {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            width: 30px;
+            height: 24px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 0;
+        }
+
+        .menu-toggle span {
+            width: 100%;
+            height: 2px;
+            background: var(--white);
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            transform-origin: left center;
+        }
+
+        /* Hamburger Animation */
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+            width: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+
+        .nav-links {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100svh;
+            background: rgba(18, 43, 39, 0.98);
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 2.5rem;
+            transform: translateY(-100%);
+            transition: transform 0.4s cubic-bezier(0.77, 0.2, 0.05, 1.0);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .nav-links.active {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .nav-links a:not(.btn) {
+            margin: 0;
+            font-size: 1.75rem;
+            text-shadow: none;
+        }
+
+        .btn-quote {
+            margin: 0;
+            margin-top: 1rem;
+            font-size: 1.1rem;
+        }
+    }
+</style>
+
+<script>
+    const header = document.getElementById('main-header');
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const navLinks = document.getElementById('nav-links');
+    const navItems = document.querySelectorAll('.nav-item');
+    
+    // Desktop Scrolled Effect
+    const toggleHeaderScrolled = () => {
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    };
+
+    window.addEventListener('scroll', toggleHeaderScrolled);
+    toggleHeaderScrolled();
+
+    // Mobile Menu Toggle
+    const toggleMenu = () => {
+        menuBtn.classList.toggle('active');
+        navLinks.classList.toggle('active');
+        
+        // Prevent body scrolling when menu is open
+        if (navLinks.classList.contains('active')) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    };
+
+    if (menuBtn) {
+        menuBtn.addEventListener('click', toggleMenu);
+    }
+
+    // Close menu when a link is clicked
+    navItems.forEach(item => {
+        item.addEventListener('click', () => {
+            if (navLinks.classList.contains('active')) {
+                toggleMenu();
+            }
+        });
+    });
+</script>
