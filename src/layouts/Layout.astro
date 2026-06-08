@@ -8,6 +8,7 @@ const {
     title = "Vive Domos | Construcción de Domos Personalizados en Chile",
     description = "Especialistas en Construcción de Domos llave en mano. Proyectos para camping, glamping, viviendas en todo Chile.",
 } = Astro.props;
+import Footer from '../components/Footer.astro';
 ---
 
 <!doctype html>
@@ -221,6 +222,7 @@ const {
         <main>
             <slot />
         </main>
+        <Footer />
         
         <script>
             // Intersection Observer for scroll animations
