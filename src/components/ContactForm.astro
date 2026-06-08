@@ -2,6 +2,9 @@
     id="contact-form"
     class="premium-form animate-on-scroll"
 >
+    <!-- Honeypot Field (Anti-Bot) -->
+    <input type="text" name="_gotcha" style="display:none !important" tabindex="-1" autocomplete="off" />
+
     <div class="form-group">
         <label for="name">Nombre completo</label>
         <input type="text" id="name" name="name" required placeholder="Ej: Juan Pérez" />
@@ -28,6 +31,8 @@
     <p class="form-footer">
         Respuesta rápida garantizada en menos de 24 horas ⏱️
     </p>
+
+
 </form>
 
 <style>
@@ -96,21 +101,92 @@
         font-size: 0.85rem;
         font-weight: 500;
     }
+
+    .recaptcha-text {
+        font-size: 0.7rem;
+        color: #9ca3af;
+        text-align: center;
+        margin-top: 1rem;
+        line-height: 1.4;
+    }
+
+    .recaptcha-text a {
+        color: #6b7280;
+        text-decoration: underline;
+    }
 </style>
 
+<style is:global>
+    .grecaptcha-badge { 
+        visibility: hidden !important; 
+    }
+</style>
+
+<!-- Google reCAPTCHA v3 Script -->
+<script src="https://www.google.com/recaptcha/api.js?render=6LeE_RMtAAAAACe9qqdTi2iYcenZQEnH0-v5DZfk" async defer></script>
+
 <script>
-    const form = document.getElementById("contact-form");
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
+    declare const grecaptcha: any;
+    
+    const form = document.getElementById("contact-form") as HTMLFormElement;
+    if (form) {
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = form.querySelector('button[type="submit"]') as HTMLButtonElement;
+            const originalBtnText = submitBtn.textContent || "Quiero mi cotización gratuita";
+            submitBtn.textContent = "Enviando cotización...";
+            submitBtn.disabled = true;
+            submitBtn.style.opacity = "0.7";
 
-        // Aquí puedes integrar con un servicio de email como Web3Forms, Formspree, etc.
-        // Por ahora redirige a WhatsApp con los datos
-        const message = `Hola, me interesa cotizar un domo.%0ANombre: ${data.name}%0ACorreo: ${data.email}%0ATeléfono: ${data.phone}%0AMensaje: ${data.message}`;
-        window.open(`https://wa.me/56912345678?text=${message}`, "_blank");
+            try {
+                const formData = new FormData(form);
 
-        form.reset();
-        alert("¡Gracias! Te contactaremos por WhatsApp.");
-    });
+                // Simulate reCAPTCHA v3 Execution
+                if (typeof grecaptcha !== "undefined") {
+                    try {
+                        const token = await new Promise((resolve) => {
+                            grecaptcha.ready(function() {
+                                grecaptcha.execute('6LeE_RMtAAAAACe9qqdTi2iYcenZQEnH0-v5DZfk', {action: 'submit'}).then(function(t: string) {
+                                    resolve(t);
+                                });
+                            });
+                        });
+                        formData.append('recaptcha_token', token as string);
+                    } catch(error) {
+                        console.log("reCAPTCHA skip due to invalid fake key, continuing...");
+                    }
+                }
+
+                // Send to backend endpoint
+                const response = await fetch('/api/contact', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    form.innerHTML = `
+                        <div style="text-align: center; padding: 2rem 0;">
+                            <div style="width: 60px; height: 60px; background: #e0f2fe; color: #0284c7; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem auto;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </div>
+                            <h3 style="color: var(--primary-dark); margin-bottom: 1rem; font-size: 1.5rem;">¡Cotización Enviada!</h3>
+                            <p style="color: var(--gray); font-size: 1.1rem; line-height: 1.5;">Revisa tu bandeja de entrada. Te hemos enviado un correo confirmando la recepción.</p>
+                            <p style="color: var(--primary); font-weight: 500; margin-top: 1rem;">Te contactaremos en menos de 24 hrs.</p>
+                        </div>
+                    `;
+                } else {
+                    throw new Error(result.error || "Error desconocido");
+                }
+
+            } catch (error) {
+                alert("Hubo un error al enviar tu solicitud. Por favor intenta de nuevo o contáctanos por WhatsApp.");
+                submitBtn.textContent = originalBtnText;
+                submitBtn.disabled = false;
+                submitBtn.style.opacity = "1";
+            }
+        });
+    }
 </script>

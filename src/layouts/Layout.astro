@@ -1,12 +1,12 @@
 ---
 export interface Props {
-    title: string;
+    title?: string;
     description?: string;
 }
 
 const {
-    title,
-    description = "VIVE DOMOS - Domos geodésicos llave en mano en Chile",
+    title = "Vive Domos | Construcción de Domos Personalizados en Chile",
+    description = "Especialistas en Construcción de Domos llave en mano. Proyectos para camping, glamping, viviendas en todo Chile.",
 } = Astro.props;
 ---
 
@@ -15,13 +15,47 @@ const {
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- SEO Básico -->
         <title>{title}</title>
         <meta name="description" content={description} />
-        <meta
-            name="keywords"
-            content="domos geodésicos, domos chile, glamping, vivienda domo, vive domos"
-        />
+        <meta name="keywords" content="domos llave en mano, casas domo chile, construir domo glamping, construccion de domos" />
         <meta name="author" content="VIVE DOMOS" />
+        <link rel="canonical" href={`https://vivedomos.cl${Astro.url.pathname}`} />
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`https://vivedomos.cl${Astro.url.pathname}`} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:image" content="https://vivedomos.cl/hero-domo-1.jpeg" />
+        <meta property="og:site_name" content="VIVE DOMOS" />
+
+        <!-- Twitter -->
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={`https://vivedomos.cl${Astro.url.pathname}`} />
+        <meta property="twitter:title" content={title} />
+        <meta property="twitter:description" content={description} />
+        <meta property="twitter:image" content="https://vivedomos.cl/hero-domo-1.jpeg" />
+
+        <!-- Schema.org JSON-LD LocalBusiness -->
+        <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          "name": "Vive Domos",
+          "image": "https://vivedomos.cl/hero-domo-1.jpeg",
+          "description": "Especialistas en Construcción de Domos llave en mano. Proyectos para camping, glamping y viviendas con cobertura en todo Chile.",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "La Serena",
+            "addressRegion": "Región de Coquimbo",
+            "addressCountry": "CL"
+          },
+          "telephone": "+56912345678",
+          "url": "https://vivedomos.cl"
+        }
+        </script>
+
         <link rel="icon" type="image/webp" href="/favicon.webp" />
         <!-- Google Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com">

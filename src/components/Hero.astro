@@ -1,9 +1,22 @@
+---
+import { getImage } from 'astro:assets';
+import hero1 from '../assets/images/hero-domo-1.jpeg';
+import hero2 from '../assets/images/hero-domo-2.jpeg';
+import hero3 from '../assets/images/hero-domo-3.jpeg';
+import hero4 from '../assets/images/hero-domo-4.jpeg';
+
+const optimizedBg1 = await getImage({ src: hero1, format: 'webp', width: 1920 });
+const optimizedBg2 = await getImage({ src: hero2, format: 'webp', width: 1920 });
+const optimizedBg3 = await getImage({ src: hero3, format: 'webp', width: 1920 });
+const optimizedBg4 = await getImage({ src: hero4, format: 'webp', width: 1920 });
+---
+
 <section class="hero">
     <div class="hero-backgrounds">
-        <div class="bg-image bg-1"></div>
-        <div class="bg-image bg-2"></div>
-        <div class="bg-image bg-3"></div>
-        <div class="bg-image bg-4"></div>
+        <div class="bg-image bg-1" style={`background-image: url(${optimizedBg1.src});`}></div>
+        <div class="bg-image bg-2" style={`background-image: url(${optimizedBg2.src});`}></div>
+        <div class="bg-image bg-3" style={`background-image: url(${optimizedBg3.src});`}></div>
+        <div class="bg-image bg-4" style={`background-image: url(${optimizedBg4.src});`}></div>
     </div>
     <div class="hero-overlay"></div>
     <div class="container hero-content animate-on-scroll">
@@ -54,19 +67,15 @@
 
     /* Set the specific images */
     .bg-1 {
-        background-image: url('/hero-domo-1.jpeg');
         animation-delay: 0s;
     }
     .bg-2 {
-        background-image: url('/hero-domo-2.jpeg');
         animation-delay: 6s;
     }
     .bg-3 {
-        background-image: url('/hero-domo-3.jpeg');
         animation-delay: 12s;
     }
     .bg-4 {
-        background-image: url('/hero-domo-4.jpeg');
         animation-delay: 18s;
     }
 

@@ -2,9 +2,13 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
+import { Image } from 'astro:assets';
+import heroImg from '../assets/images/hero-domo-2.jpeg';
+import interiorImg1 from '../assets/images/interior-domo-10-1.jpeg';
+import interiorImg2 from '../assets/images/interior-domo-10.jpeg';
 ---
 
-<Layout title="Domo 10m - VIVE DOMOS">
+<Layout title="Domo Geodésico de 10 Metros | Vive Domos" description="Descubre nuestro majestuoso Domo Geodésico de 10 metros. Espacios amplios ideales para vivienda principal o refugios premium. Construcción llave en mano en todo Chile.">
     <Header />
     <div class="page-hero animate-on-scroll">
         <div class="container">
@@ -18,7 +22,7 @@ import WhatsAppButton from "../components/WhatsAppButton.astro";
     <article class="container">
         <div class="content-grid">
             <div class="main-content animate-on-scroll">
-                <img src="/hero-domo-2.jpeg" alt="Domo Geodésico 10m" class="featured-image" />
+                <Image src={heroImg} alt="Domo Geodésico 10m" class="featured-image" width={1000} height={600} loading="eager" />
                 
                 <p class="lead-text">
                     Domo geodésico de 112 m² con baño completo, amplio segundo
@@ -28,8 +32,8 @@ import WhatsAppButton from "../components/WhatsAppButton.astro";
                 </p>
 
                 <div class="image-gallery">
-                    <img src="/interior-domo-10-1.jpeg" alt="Interior Domo 10m" class="gallery-img" />
-                    <img src="/interior-domo-10.jpeg" alt="Interior Domo 10m detalle" class="gallery-img" />
+                    <Image src={interiorImg1} alt="Interior Domo 10m" class="gallery-img" width={600} height={400} loading="lazy" />
+                    <Image src={interiorImg2} alt="Interior Domo 10m detalle" class="gallery-img" width={600} height={400} loading="lazy" />
                 </div>
 
                 <h2>Amplio, luminoso y lleno de carácter</h2>

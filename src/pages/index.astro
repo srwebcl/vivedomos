@@ -7,9 +7,13 @@ import ContactForm from "../components/ContactForm.astro";
 import WhatsAppButton from "../components/WhatsAppButton.astro";
 import Gallery from "../components/Gallery.astro";
 import Marquee from "../components/Marquee.astro";
+
+// Importar imágenes para optimización automática
+import imgDomo8m from '../assets/images/hero-domo-1.jpeg';
+import imgDomo10m from '../assets/images/hero-domo-2.jpeg';
 ---
 
-<Layout title="VIVE DOMOS - Domos geodésicos en Chile">
+<Layout>
     <Header />
     <Hero />
     <Marquee />
@@ -28,7 +32,7 @@ import Marquee from "../components/Marquee.astro";
                 area="64 m²"
                 habitaciones="2 niveles · 1 baño · Cocina americana"
                 link="/domo-8m"
-                imagen="/hero-domo-1.jpeg"
+                imagen={imgDomo8m}
             />
             <DomoCard
                 titulo="Domo Geodésico 10 m"
@@ -36,7 +40,7 @@ import Marquee from "../components/Marquee.astro";
                 area="112 m²"
                 habitaciones="2 niveles · 1 baño · Amplio espacio"
                 link="/domo-10m"
-                imagen="/hero-domo-2.jpeg"
+                imagen={imgDomo10m}
             />
         </div>
     </section>
@@ -251,6 +255,9 @@ import Marquee from "../components/Marquee.astro";
 
     <script>
         // Actualizar año automáticamente
-        document.getElementById('current-year').textContent = new Date().getFullYear();
+        const yearEl = document.getElementById('current-year');
+        if (yearEl) {
+            yearEl.textContent = new Date().getFullYear().toString();
+        }
     </script>
 </Layout>

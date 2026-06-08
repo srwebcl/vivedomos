@@ -1,11 +1,13 @@
 ---
+import { Image } from 'astro:assets';
+
 export interface Props {
     titulo: string;
     precio: string;
     area: string;
     habitaciones?: string;
     link: string;
-    imagen: string;
+    imagen: any;
 }
 
 const {
@@ -20,7 +22,7 @@ const {
 
 <div class="card animate-on-scroll">
     <div class="card-image-container">
-        <div class="card-image" style={`background-image: url('${imagen}');`}></div>
+        <Image src={imagen} alt={`Exterior de ${titulo}`} width={600} height={400} class="card-image" />
         <div class="card-badge">Llave en mano</div>
     </div>
     <div class="card-content">
@@ -47,9 +49,7 @@ const {
     .card-image {
         width: 100%;
         height: 100%;
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
+        object-fit: cover;
         transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 

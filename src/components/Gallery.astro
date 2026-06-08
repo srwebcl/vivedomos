@@ -1,15 +1,17 @@
 ---
 // Gallery.astro
-const images = [
-    "/hero-domo-1.jpeg",
-    "/hero-domo-2.jpeg",
-    "/hero-domo-3.jpeg",
-    "/hero-domo-4.jpeg",
-    "/interior-domo-10-1.jpeg",
-    "/interior-domo-8.jpeg",
-    "/interior-domo-10.jpeg",
-    "/interior-domo.jpeg"
-];
+import { Image } from 'astro:assets';
+
+import img1 from '../assets/images/hero-domo-1.jpeg';
+import img2 from '../assets/images/hero-domo-2.jpeg';
+import img3 from '../assets/images/hero-domo-3.jpeg';
+import img4 from '../assets/images/hero-domo-4.jpeg';
+import img5 from '../assets/images/interior-domo-10-1.jpeg';
+import img6 from '../assets/images/interior-domo-8.jpeg';
+import img7 from '../assets/images/interior-domo-10.jpeg';
+import img8 from '../assets/images/interior-domo.jpeg';
+
+const images = [img1, img2, img3, img4, img5, img6, img7, img8];
 ---
 
 <section class="gallery-section">
@@ -24,7 +26,7 @@ const images = [
         <div class="carousel-track">
             {images.map((src, index) => (
                 <div class="carousel-slide">
-                    <img src={src} alt={`Proyecto Vive Domos ${index + 1}`} loading="lazy" />
+                    <Image src={src} alt={`Proyecto Vive Domos ${index + 1}`} class="gallery-image" width={800} height={600} loading="lazy" />
                 </div>
             ))}
         </div>
@@ -158,13 +160,19 @@ const images = [
 
     if (track && prevBtn && nextBtn) {
         nextBtn.addEventListener('click', () => {
-            const slideWidth = track.querySelector('.carousel-slide').clientWidth;
-            track.scrollBy({ left: slideWidth + 32, behavior: 'smooth' }); // 32 is gap
+            const slide = track.querySelector('.carousel-slide');
+            const slideWidth = slide ? slide.clientWidth : 0;
+            if (slideWidth > 0) {
+                track.scrollBy({ left: slideWidth + 32, behavior: 'smooth' }); // 32 is gap
+            }
         });
 
         prevBtn.addEventListener('click', () => {
-            const slideWidth = track.querySelector('.carousel-slide').clientWidth;
-            track.scrollBy({ left: -(slideWidth + 32), behavior: 'smooth' });
+            const slide = track.querySelector('.carousel-slide');
+            const slideWidth = slide ? slide.clientWidth : 0;
+            if (slideWidth > 0) {
+                track.scrollBy({ left: -(slideWidth + 32), behavior: 'smooth' });
+            }
         });
     }
 </script>
