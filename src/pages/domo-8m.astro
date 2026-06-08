@@ -10,7 +10,7 @@ import interiorImg2 from '../assets/images/interior-domo.jpeg';
 
 <Layout title="Domo Geodésico de 8 Metros | Vive Domos" description="Descubre nuestro exclusivo Domo Geodésico de 8 metros. Perfecto para proyectos de glamping o cabañas turísticas. Construcción llave en mano en todo Chile.">
     <Header />
-    <div class="page-hero animate-on-scroll">
+    <div class="page-hero animate-on-scroll" style={`--hero-bg: url('${heroImg.src}')`}>
         <div class="container">
             <span class="pre-title">Línea Exclusiva</span>
             <h1>Domo Geodésico 8 m</h1>
@@ -131,7 +131,7 @@ import interiorImg2 from '../assets/images/interior-domo.jpeg';
             content: '';
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: url('/hero-domo-1.jpeg') center/cover no-repeat;
+            background: var(--hero-bg) center/cover no-repeat;
             opacity: 0.15;
             mix-blend-mode: overlay;
         }
